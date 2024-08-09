@@ -61,7 +61,7 @@ jobs:
       run: |
          echo "ipa-path=$(find SampleApp/bin/Release/net8.0-ios/ios-arm64/publish -name "*.ipa")"  >> $GITHUB_ENV
          mkdir -p $(pwd)/private_keys
-         echo -e "${{secrets.APIKEY}}" > $(pwd)/private_keys/AuthKey66878.p8
+         echo -e "${{secrets.APIKEY}}" > $(pwd)/AuthKey_${{secrets.APIKEY}}.p8
          
     - name: Publish To Store
       env: 
