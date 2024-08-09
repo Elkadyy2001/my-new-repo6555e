@@ -60,14 +60,10 @@ jobs:
       id: find-ipa
       run: |
          echo "ipa-path=$(find SampleApp/bin/Release/net8.0-ios/ios-arm64/publish -name "*.ipa")"  >> $GITHUB_ENV
-         mkdir -p $(pwd)/private_keys
-         echo -e "${{secrets.APIKEY}}" > $(pwd)/AuthKey_${{secrets.KEYID}}.p8
+         mkdir -p ~/private_keys
+         echo -e "${{ secrets.APIKEY }}" > ~/private_keys/AuthKey_${{ secrets.KEYID }}.p8
          
     - name: Publish To Store
-      env: 
-          API_PRIVATE_KEYS_DIR: '$(pwd)'
-      
-      
       run: |
           xcrun altool --validate-app -f "${{ env.ipa-path }}" -t ios --apiKey "${{ secrets.KEYID }}"  --apiIssuer "${{ secrets.ISSUERID }}"
           xcrun altool --upload-app -f "${{ env.ipa-path }}" -t ios --apiKey "${{ secrets.KEYID }}"  --apiIssuer "${{ secrets.ISSUERID }}"
